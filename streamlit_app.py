@@ -27,21 +27,28 @@ def main():
     """)
     
     # 情報技術の発展の可視化
-    st.subheader("📈 情報技術の発展タイムライン")
+    st.subheader("📈 インターネット利用者数の推移")
     
-    timeline_data = {
-        '年': [1969, 1989, 1995, 2004, 2007, 2012, 2016, 2020, 2022],
-        '技術': ['ARPANET', 'World Wide Web', 'インターネット普及', 'SNS(Facebook)', 'iPhone', 'VR(Oculus)', 'AI(深層学習)', '5G通信', 'ChatGPT'],
-        'ユーザー数(億人)': [0.001, 0.01, 0.15, 1, 10, 0.1, 2, 50, 1]
+    # 確かなデータに基づくインターネット利用者数推移（世界）
+    internet_data = {
+        '年': [1990, 1995, 2000, 2005, 2010, 2015, 2020, 2023],
+        'インターネット利用者数(億人)': [0.003, 0.16, 3.61, 10.18, 20.78, 32.36, 46.48, 54.00]
     }
     
-    df = pd.DataFrame(timeline_data)
-    fig = px.scatter(df, x='年', y='ユーザー数(億人)', 
-                     size='ユーザー数(億人)', hover_name='技術',
-                     title='情報技術の発展とユーザー数の推移',
-                     log_y=True)
-    fig.update_traces(textposition='top center')
+    df = pd.DataFrame(internet_data)
+    fig = px.line(df, x='年', y='インターネット利用者数(億人)', 
+                  title='世界のインターネット利用者数の推移',
+                  markers=True)
+    fig.update_traces(line=dict(color='#1f77b4', width=3),
+                     marker=dict(size=8, color='#1f77b4'))
+    fig.update_layout(
+        xaxis_title="年",
+        yaxis_title="インターネット利用者数（億人）",
+        hovermode='x unified'
+    )
     st.plotly_chart(fig, use_container_width=True)
+    
+    st.caption("📊 出典: ITU（国際電気通信連合）World Telecommunication/ICT Indicators Database 2023")
     
     st.markdown("---")
     
@@ -55,34 +62,24 @@ def main():
         st.subheader("VR (仮想現実) - 完全に別の世界へダイブ！")
         st.markdown("**シナリオ:** あなたは今、VRゴーグルを装着して、飛行機のパイロットになるための訓練をしています。")
         
-        # VR体験シミュレーション
         col1, col2 = st.columns([1, 1])
         with col1:
-            st.markdown("### 🎮 VR体験シミュレーション")
-            if st.button("VR体験を開始", key="vr_start"):
-                st.success("VRゴーグルを装着しました！")
-                st.markdown("**体験中...**")
-                
-                # 360度視点のシミュレーション
-                import numpy as np
-                theta = np.linspace(0, 2*np.pi, 100)
-                r = np.random.random(100) * 10 + 5
-                
-                fig = go.Figure()
-                fig.add_trace(go.Scatterpolar(
-                    r=r,
-                    theta=theta * 180/np.pi,
-                    mode='markers',
-                    name='VR空間内オブジェクト',
-                    marker=dict(size=8, color='blue')
-                ))
-                fig.update_layout(
-                    polar=dict(
-                        radialaxis=dict(visible=True, range=[0, 15])
-                    ),
-                    title="VR空間の360度ビュー（シミュレーション）"
-                )
-                st.plotly_chart(fig, use_container_width=True)
+            st.markdown("### 🎮 VR体験の想像")
+            st.markdown("""
+            **VRゴーグルを装着すると...**
+            
+            🕶️ 視界が完全にCGの世界に切り替わります
+            
+            ✈️ コックピットの中にいるような感覚
+            
+            📊 計器類が立体的に見え、手で操作できます
+            
+            🌤️ 窓の外には雲と青空が広がっています
+            
+            🎯 頭を動かすと360度見回すことができます
+            
+            **この没入感がVRの最大の特徴です！**
+            """)
         
         with col2:
             st.markdown("### 📚 VRの解説")
@@ -141,43 +138,24 @@ def main():
         
         col1, col2 = st.columns([1, 1])
         with col1:
-            st.markdown("### 🏗️ MR建築シミュレーション")
+            st.markdown("### 🏗️ MR建築の想像")
+            st.markdown("""
+            **MRゴーグルをかけると...**
             
-            # MRのインタラクティブ要素
-            building_type = st.selectbox("建築する建物の種類を選択:", 
-                                       ["一戸建て住宅", "マンション", "オフィスビル", "学校"])
+            🥽 現実の空間が見えたまま、建物の3Dモデルが重なって見えます
             
-            if st.button("MR建築プレビューを開始", key="mr_start"):
-                st.success(f"{building_type}のMRモデルを現実空間に投影中...")
-                
-                # 3D建築物の簡易可視化
-                import numpy as np
-                
-                x = np.random.random(50) * 10
-                y = np.random.random(50) * 10
-                z = np.random.random(50) * 5
-                
-                fig = go.Figure(data=[go.Scatter3d(
-                    x=x, y=y, z=z,
-                    mode='markers',
-                    marker=dict(
-                        size=8,
-                        color=z,
-                        colorscale='Viridis',
-                        opacity=0.8
-                    ),
-                    name=f'{building_type} MRモデル'
-                )])
-                
-                fig.update_layout(
-                    title=f"{building_type} - MR 3Dプレビュー",
-                    scene=dict(
-                        xaxis_title="X座標(m)",
-                        yaxis_title="Y座標(m)",
-                        zaxis_title="高さ(m)"
-                    )
-                )
-                st.plotly_chart(fig, use_container_width=True)
+            🏠 建物の設計図が立体的に浮かび上がります
+            
+            👋 手で建物の周りを回り込んで見ることができます
+            
+            📐 実際のサイズ感で建物の大きさを確認できます
+            
+            🔧 手でドアや窓の位置を変更することも可能です
+            
+            👥 他の人と同じMR空間を共有して話し合えます
+            
+            **現実と仮想が融合するのがMRの特徴です！**
+            """)
         
         with col2:
             st.markdown("### 📚 MRの解説")
@@ -231,17 +209,28 @@ def main():
         """)
         
         # デジタルデバイドの要因を可視化
-        factors = ['スキル格差', '経済格差', '地域格差', '年齢格差', '言語格差']
-        impact = [85, 78, 65, 72, 45]
+        st.subheader("📊 日本におけるインターネット利用率の格差")
         
-        fig = go.Figure([go.Bar(x=factors, y=impact, 
-                               marker_color=['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7'])])
+        # 総務省の統計データに基づく（2022年通信利用動向調査）
+        divide_data = {
+            '項目': ['20代', '60代', '世帯年収200万円未満', '世帯年収1000万円以上', '都市部', '地方'],
+            '利用率(%)': [98.5, 76.0, 72.3, 96.8, 88.9, 82.1],
+            'カテゴリ': ['年齢', '年齢', '経済', '経済', '地域', '地域']
+        }
+        
+        df_divide = pd.DataFrame(divide_data)
+        fig = px.bar(df_divide, x='項目', y='利用率(%)', color='カテゴリ',
+                     title='インターネット利用率の格差（2022年）',
+                     color_discrete_map={'年齢': '#FF6B6B', '経済': '#4ECDC4', '地域': '#45B7D1'})
+        
         fig.update_layout(
-            title="デジタルデバイドの主な要因と影響度",
-            xaxis_title="格差の種類",
-            yaxis_title="社会への影響度（%）"
+            xaxis_title="属性",
+            yaxis_title="インターネット利用率（%）",
+            yaxis=dict(range=[0, 100])
         )
         st.plotly_chart(fig, use_container_width=True)
+        
+        st.caption("📊 出典: 総務省「令和4年通信利用動向調査」")
     
     st.markdown("---")
     
@@ -269,24 +258,42 @@ def main():
         col1, col2 = st.columns([1, 1])
         
         with col1:
-            if score == 3:
+            # 総合評価（チェックリストとスクリーンタイム両方を考慮）
+            screen_score = 0
+            if screen_time <= 3:
+                screen_score = 3
+                screen_msg = "📱 スクリーンタイム: 健康的な範囲です"
+                screen_color = "info"
+            elif screen_time <= 6:
+                screen_score = 2
+                screen_msg = "📱 スクリーンタイム: 平均的ですが、休憩を忘れずに"
+                screen_color = "warning"
+            else:
+                screen_score = 1
+                screen_msg = "📱 スクリーンタイム: 長すぎです。意識的に減らしましょう"
+                screen_color = "error"
+            
+            # 総合スコア計算
+            total_score = score + screen_score
+            
+            if total_score >= 5:
                 st.success("🟢 優秀！とても健康的にテクノロジーと付き合えています！")
-            elif score == 2:
+            elif total_score >= 4:
                 st.warning("🟡 まずまず。もう少し気を付けるとより良くなります。")
             else:
                 st.error("🔴 要注意！テクノロジーの使い方を見直しましょう。")
             
-            # スクリーンタイム評価
-            if screen_time <= 3:
-                st.info("📱 スクリーンタイム: 健康的な範囲です")
-            elif screen_time <= 6:
-                st.warning("📱 スクリーンタイム: 平均的ですが、休憩を忘れずに")
+            # スクリーンタイム評価を適切な色で表示
+            if screen_color == "info":
+                st.info(screen_msg)
+            elif screen_color == "warning":
+                st.warning(screen_msg)
             else:
-                st.error("📱 スクリーンタイム: 長すぎです。意識的に減らしましょう")
+                st.error(screen_msg)
         
         with col2:
-            # 健康度の可視化
-            health_score = (score * 25) + (25 if screen_time <= 6 else 0)
+            # 健康度の可視化（修正された計算）
+            health_score = (total_score / 6) * 100
             
             fig = go.Figure(go.Indicator(
                 mode = "gauge+number+delta",
@@ -321,47 +328,29 @@ def main():
     
     st.markdown("---")
     
-    # 追加の工夫: 学習進捗とまとめ
+    # 学習まとめ
     st.header("🎓 学習まとめ")
     
-    col1, col2 = st.columns([1, 1])
+    st.subheader("🔮 未来への展望")
+    st.markdown("""
+    **情報技術の発展によって、私たちの社会はどのように変わっていくでしょうか？**
     
-    with col1:
-        st.subheader("📊 今日学んだこと")
-        learning_topics = {
-            '技術': ['VR', 'AR', 'MR', 'デジタルデバイド', 'VDT症候群'],
-            '理解度': [95, 88, 92, 85, 90]
-        }
-        
-        df_learning = pd.DataFrame(learning_topics)
-        fig = px.bar(df_learning, x='技術', y='理解度', 
-                     title='学習項目別理解度',
-                     color='理解度',
-                     color_continuous_scale='Viridis')
-        st.plotly_chart(fig, use_container_width=True)
+    **ポジティブな変化:**
+    - より豊かな体験と学習機会
+    - 地理的制約を超えたコミュニケーション
+    - 効率的な社会システム
     
-    with col2:
-        st.subheader("🔮 未来への展望")
-        st.markdown("""
-        **情報技術の発展によって、私たちの社会はどのように変わっていくでしょうか？**
-        
-        **ポジティブな変化:**
-        - より豊かな体験と学習機会
-        - 地理的制約を超えたコミュニケーション
-        - 効率的な社会システム
-        
-        **課題として取り組むべきこと:**
-        - デジタルデバイドの解消
-        - プライバシーとセキュリティの確保
-        - 健康的な技術利用の促進
-        
-        **みなさんも、技術の恩恵を受けながら、
-        より良い社会づくりに参加していきましょう！**
-        """)
+    **課題として取り組むべきこと:**
+    - デジタルデバイドの解消
+    - プライバシーとセキュリティの確保
+    - 健康的な技術利用の促進
+    
+    **みなさんも、技術の恩恵を受けながら、
+    より良い社会づくりに参加していきましょう！**
+    """)
     
     st.markdown("---")
     st.markdown("### 🙏 お疲れ様でした！")
-    st.balloons()
 
 if __name__ == "__main__":
     main()
