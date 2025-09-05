@@ -4,14 +4,14 @@ import plotly.express as px
 import pandas as pd
 
 st.set_page_config(
-    page_title="未来技術体験エキスポ",
+    page_title="情報技術の発達",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
 def main():
-    st.title("未来技術 体験エキスポ 🚀")
+    st.title("情報技術の発達")
     st.caption("Created by Dit-Lab.(Daiki ITO)")
     st.caption("Supported by Tomoaki ATSUMI")
     
