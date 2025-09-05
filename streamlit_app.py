@@ -3,6 +3,14 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
+# スクリーンタイム評価基準の出典:
+# 1. Reid Health (2024). "How Much Screen Time is Too Much for Adults?"
+#    推奨: 労働時間外のスクリーンタイムは2時間以下
+# 2. PMC研究論文 (2024). "The hazards of excessive screen time: Impacts on physical health, mental health, and overall well-being"
+#    PMC Article: PMC10852174. 6時間以上の使用でうつ病リスク増加
+# 3. Stanford Longevity Center (2024). "What Excessive Screen Time Does to the Adult Brain"
+#    18-25歳成人における過度のスクリーンタイムが脳の皮質を薄くする影響を確認
+
 st.set_page_config(
     page_title="情報技術の発達",
     page_icon="🚀",
@@ -259,18 +267,20 @@ def main():
         
         with col1:
             # 総合評価（チェックリストとスクリーンタイム両方を考慮）
+            # 出典: Reid Health研究, PMC論文 (2024) - 成人の非労働時間スクリーンタイム推奨値
+            # 2時間以下: 健康的範囲, 6時間以上: うつ病リスク増加
             screen_score = 0
-            if screen_time <= 3:
+            if screen_time <= 2:
                 screen_score = 3
-                screen_msg = "📱 スクリーンタイム: 健康的な範囲です"
+                screen_msg = "📱 スクリーンタイム: 健康的な範囲です（推奨: ≤2時間/日）"
                 screen_color = "info"
             elif screen_time <= 6:
                 screen_score = 2
-                screen_msg = "📱 スクリーンタイム: 平均的ですが、休憩を忘れずに"
+                screen_msg = "📱 スクリーンタイム: 注意が必要です。メンタルヘルスへの影響に注意"
                 screen_color = "warning"
             else:
                 screen_score = 1
-                screen_msg = "📱 スクリーンタイム: 長すぎです。意識的に減らしましょう"
+                screen_msg = "📱 スクリーンタイム: 危険域です。うつ病リスクが高まります（研究: 6時間以上）"
                 screen_color = "error"
             
             # 総合スコア計算
