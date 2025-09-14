@@ -19,7 +19,7 @@ st.set_page_config(
 )
 
 def main():
-    st.title("情報技術の発達")
+    st.title("情報技術の発達（pp.225-226）")
     st.caption("Created by Dit-Lab.(Daiki ITO)")
     st.caption("Supported by Tomoaki ATSUMI")
     
