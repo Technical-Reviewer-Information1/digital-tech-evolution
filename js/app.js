@@ -110,6 +110,31 @@
         a: 0, why: '完全な仮想空間＝VR、現実に重ねる＝AR、現実と仮想が影響し合う＝MRです。' }
     ], '本文の答えは【イ】⓪ です。');
     window.Terms.glossary($('glossBox'), ['デジタルデバイド', '情報格差', 'VR', 'AR', 'MR', 'IoT', 'ビッグデータ', '人工知能']);
+    Worksheet.make('wsBox', {
+      name: 'digital-tech-evolution',
+      fields: [
+        { id: 't1', label: '① 取り上げる道具', hint: '電話・音楽・写真・地図・買い物・お金など。', rows: 2, ph: '例：写真のとり方と見せ方' },
+        { id: 't2', label: '② 昔（聞き取り）', hint: 'だれに聞いたか、どう使っていたか。', rows: 3,
+          ph: '例：祖母に聞いた。フィルムカメラで撮り、写真屋に出して1週間後に紙で受け取っていた' },
+        { id: 't3', label: '③ いま', hint: '自分の使い方。', rows: 2, ph: '例：スマートフォンで撮ってすぐ共有し、クラウドに保存する' },
+        { id: 't4', label: '④ 何が変わったか', hint: '速さ・量・費用・だれが使えるか。数で書けるとよい。', rows: 3,
+          ph: '例：1週間→数秒。1本36枚→ほぼ無制限。現像代が不要になった' },
+        { id: 't5', label: '⑤ 変化で生まれた新しい問題', hint: '便利になったぶん、何が起きたか。', rows: 3,
+          ph: '例：勝手に撮られて公開される。データが多すぎて探せない。保存先がなくなると消える' },
+        { id: 't6', label: '⑥ これからどうなると思うか', hint: '根拠もいっしょに。', rows: 2, ph: '例：AIが自動で整理する。だからこそ「何を残すか」を人が決める必要が出てくる' }
+      ],
+      build: function (v, e) {
+        return '<h4>技術の変化 年表シート</h4><dl>' +
+          '<dt>① 取り上げる道具</dt><dd>' + e(v.t1) + '</dd>' +
+          '<dt>② 昔（聞き取り）</dt><dd>' + e(v.t2) + '</dd>' +
+          '<dt>③ いま</dt><dd>' + e(v.t3) + '</dd>' +
+          '<dt>④ 変わったこと</dt><dd>' + e(v.t4) + '</dd>' +
+          '<dt>⑤ 生まれた新しい問題</dt><dd>' + e(v.t5) + '</dd>' +
+          '<dt>⑥ これから</dt><dd>' + e(v.t6) + '</dd></dl>';
+      },
+      note: '④を「速い・便利」ではなく<strong>数</strong>で書くと、変化の大きさが伝わります。'
+    });
+
     window.Terms.attach();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
